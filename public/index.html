@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Daily expense</title>
+
+    <meta name="description" content="Line Expense">
+    <meta name="author" content="Narut">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/mobiscroll.jquery.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+    
+
+  </head>
+  <body>
+  
+  <div class="container-fluid">
+	<div class="row">
+    
+		<div class="col-md-12">
+			<div class="btn-group" role="group" id="btn-categories" style="flex-flow: row wrap;">
+				 
+			</div>
+    </div>
+  </div>
+  <div class="row" style="vertical-align: middle;">
+    <div class="col-12">
+        <div class="external-container">
+            <input id="demo-external" class="demo-non-form" />
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div id="calculator" class="calculator">
+
+            <button id="clear" class="clear">C</button>
+          
+            <div id="viewer" class="viewer">0</div>
+          
+            <button class="num" data-num="7">7</button>
+            <button class="num" data-num="8">8</button>
+            <button class="num" data-num="9">9</button>
+            <button data-ops="plus" class="ops">+</button>
+          
+            <button class="num" data-num="4">4</button>
+            <button class="num" data-num="5">5</button>
+            <button class="num" data-num="6">6</button>
+            <button data-ops="minus" class="ops">-</button>
+          
+            <button class="num" data-num="1">1</button>
+            <button class="num" data-num="2">2</button>
+            <button class="num" data-num="3">3</button>
+            <button data-ops="times" class="ops">*</button>
+          
+            <button class="num" data-num="0">0</button>
+            <button class="num" data-num=".">.</button>
+            <button id="equals" class="equals" data-result="">=</button>
+            <button data-ops="divided by" class="ops">/</button>
+          </div>
+ 
+    </div>
+	</div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success" id="btn-submit">
+            <i class="fas fa-check"></i>
+        </button>
+        <button type="button" class="btn btn-danger" id="btn-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal-popup">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="modal-msg"></h5>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="js/mobiscroll.jquery.min.js"></script>
+    <script src="js/legacy.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

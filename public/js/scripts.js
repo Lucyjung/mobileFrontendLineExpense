@@ -43,6 +43,7 @@ $('#btn-submit').click(function() {
     }]).then(function () {
       $('#modal-msg').html('Message "' + msg + '" Sent');
       $('#modal-popup').modal('show');
+      viewer.innerHTML = '0';
     }).catch(function (error) {
       window.alert("Error sending message: " + error);
     });

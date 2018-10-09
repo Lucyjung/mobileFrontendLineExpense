@@ -225,7 +225,8 @@ html {
 .demo-non-form{
   width: 100%;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 10px;
+  border: inset;
 }
 .btn-fix-size{
   width: 55px;

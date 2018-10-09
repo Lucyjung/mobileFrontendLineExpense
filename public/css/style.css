@@ -217,6 +217,7 @@ html {
   }
 .icon-center{
   display:block;
+  font-size: xx-small;
 }
 .external-container {
   display: flex;
@@ -225,4 +226,7 @@ html {
   width: 100%;
   text-align: center;
   margin-top: 5px;
+}
+.btn-fix-size{
+  width: 55px;
 }

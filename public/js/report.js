@@ -1,4 +1,5 @@
-var userId = "";
+var userId = '';
+var period;
 window.onload = function (e) {
   liff.init(function (data) {
     //getReportData(data.context.userId)
@@ -6,10 +7,10 @@ window.onload = function (e) {
     getReportData(userId)
   });
 }
-
+getReportData(userId);
 $('#btn-grp-period button').click(function() {
   $(this).addClass('active').siblings().removeClass('active');
-  let period = $(this).val();
+  period = $(this).val();
 
   getReportData(userId, period)
 });
@@ -24,7 +25,7 @@ function getReportData(userId, period, target){
   if (!target){
     let d = new Date();
     if (period == "DAY"){
-      target = d.getDate() ;
+      target = d.getDate();
     }
     else if(period == "WEEK"){
       target = 1;
@@ -76,13 +77,71 @@ function getReportData(userId, period, target){
       $("#reportTbl-body").empty();
       for (let i in data.raw){
         let no = Number(i) +1;
-        let row = "<tr><td>" + no + "</td><td>"+data.raw[i].category + 
-        "</td><td>" + data.raw[i].expense +"</td><td>" + formatDate(data.raw[i].timestamp) +"</td></tr>"
+        let row = "<tr><td>" + no + "</td>" + 
+        "<td>"+data.raw[i].category + "</td>" + 
+        "<td>" + data.raw[i].expense +"</td>" + 
+        "<td>" + formatDate(data.raw[i].timestamp) +"</td>" +
+        '<td><button type="button" class="btn btn-primary" onclick=editActOnclick("' + data.raw[i].id +'","' + 
+        data.raw[i].category+ '","' + data.raw[i].expense + '","' + formatDate(data.raw[i].timestamp) +
+        '")>Edit</button></td>/tr>';
         $("#reportTbl-body").append(row)
       }
     }
   });
 }
+function editActOnclick(expenseId, category, expense, timestamp){
+  $('#modal-popup').modal('show');
+  $('#expense-id').val(expenseId);
+  $('#catDropDown').html(category);
+  $('#modal-expense').val(expense);
+  $('#dropdownMenu').empty();
+  for (let key in categories){
+    let menu = '<button class="dropdown-item" type="button">'+ categories[key].name+ '</button>';
+    $('#dropdownMenu').append(menu);
+  }
+  $('#demo-external').mobiscroll().date({
+    showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnTap
+    showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnFocus
+    dateFormat: 'yy/mm/dd',
+    onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-4-0/datetime#event-onInit
+        inst.setVal(new Date(timestamp), true);
+    }
+  });
+  $("#dropdownMenu button").click(function () {
+    $('#catDropDown').html( this.innerHTML)
+    
+  });
+}
+$('#model-edit').click(function(){
+  let expenseId = $('#expense-id').val();
+  let cost = $('#modal-expense').val();
+  let cat = $('#catDropDown').html();
+  let timestamp = $('#demo-external').val();
+  $.post("https://lucylinebot.herokuapp.com/expense/" + expenseId,
+    {
+        userId: userId,
+        cat: cat,
+        cost: cost,
+        timestamp: timestamp
+    },
+    function(){
+      $('#modal-popup').modal('hide');
+      getReportData(userId, period)
+    });
+    
+});
+$('#model-delete').click(function(){
+  let expenseId = $('#expense-id').val();
+  $.ajax({
+    url: "https://lucylinebot.herokuapp.com/expense/" + expenseId,
+    type: 'DELETE',
+    success: function(result) {
+      $('#modal-popup').modal('hide');
+      getReportData(userId, period)
+    }
+});
+    
+});
 function formatDate(date) {
   var d = new Date(date),
     month = '' + (d.getMonth() + 1),

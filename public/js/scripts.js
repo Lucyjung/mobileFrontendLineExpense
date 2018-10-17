@@ -20,7 +20,8 @@ $('#btn-submit').click(function() {
   let cost = $('#viewer').html();
   let dateStr = $('#demo-external').val();
   let search = '/';
-  dateStr = dateStr.replace(new RegExp(search, 'g'), '');
+  let dateArr = dateStr.split(search);
+  dateStr = dateArr.join('');
   let msg = cat + cost + 'D' + dateStr;
   if (cat && cat != '' && cost != 0){
     liff.sendMessages([{
@@ -29,7 +30,10 @@ $('#btn-submit').click(function() {
     }]).then(function () {
       $('#modal-msg').html('Message "' + msg + '" Sent');
       $('#modal-popup').modal('show');
+      oldNum = '';
+      theNum = '';
       viewer.innerHTML = '0';
+      equals.setAttribute('data-result', resultNum);
     }).catch(function (error) {
       window.alert("Error sending message: " + error);
     });
@@ -46,20 +50,23 @@ $('#btn-close').click(function() {
   'use strict';
 
   // Mobiscroll Date & Time initialization
-  $('#demo-external').mobiscroll().date({
-    showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnTap
-    showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnFocus
-    dateFormat: 'yy/mm/dd',
-    onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-4-0/datetime#event-onInit
-        inst.setVal(new Date(), true);
-    }
-  });
+  // $('#demo-external').mobiscroll().date({
+  //   showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnTap
+  //   showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnFocus
+  //   dateFormat: 'yy/mm/dd',
+  //   onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-4-0/datetime#event-onInit
+  //       inst.setVal(new Date(), true);
+  //   }
+  // });
 
-  $('#demo-external').click(function () {
-    $('#demo-external').mobiscroll('show');
-    return false;
+  // $('#demo-external').click(function () {
+  //   $('#demo-external').mobiscroll('show');
+  //   return false;
+  // });
+  $('#demo-external').datepicker({
+    format: 'yyyy/mm/dd',
   });
-
+  $('#demo-external').datepicker('setValue', formatDate(null))
   // Shortcut to get elements
   var el = function(element) {
     if (element.charAt(0) === '#') { // If passed an ID...
@@ -110,7 +117,7 @@ $('#btn-close').click(function() {
 
   // When: Equals is clicked. Calculate result
   var displayNum = function(ops) {
-    if (!ops ){
+    if (typeof ops != "string"){
       ops = operator;
     }
     // Convert string input to numbers

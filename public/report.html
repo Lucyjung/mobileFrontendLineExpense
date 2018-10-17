@@ -11,7 +11,7 @@
     <meta name="author" content="Narut">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/mobiscroll.jquery.min.css">
+    <link href="css/datepicker.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     
 
@@ -21,19 +21,35 @@
     <div class="container-fluid">
     <div class="row">
       <div class="btn-group" role="group" aria-label="Basic example" id="btn-grp-period">
-        <button type="button" class="btn btn-secondary" value="DAY">Day</button>
+        <button type="button" class="btn btn-secondary active" value="DAY" >Day</button>
         <button type="button" class="btn btn-secondary" value="WEEK">Week</button>
         <button type="button" class="btn btn-secondary" value="MONTH">Month</button>
         <button type="button" class="btn btn-secondary" value="YEAR">Year</button>
       </div>
 
     </div>
-
+    <div class="row" style="vertical-align: middle;margin-top: 10px;">
+      <div class="col-3">
+        <i class="fas fa-caret-square-left" id="select-left"></i>
+      </div>
+      <div class="col-6">
+        <h4 id="select-target">4</h4>
+      </div>
+      <div class="col-3">
+        <i class="fas fa-caret-square-right" id="select-right"></i>
+      </div>
+    </div>
     <div class="row">
         <canvas id="pieChart"></canvas>
     </div>
     <div class="row">
-        <h3 id="total-expense"></h3>
+        <h4 id="total-expense"></h4>
+    </div>
+    <div class="row">
+        <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapase">More Detail</button>
+        <div id="collapase" class="collapse">
+          
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -79,7 +95,7 @@
               <input type="number" class="form-control" placeholder="Expense" aria-label="Expense" aria-describedby="basic-addon1" id="modal-expense">
             </div>
             <div class="external-container">
-                <input id="demo-external" class="demo-non-form" />
+                <input id="modal-calendar" class="demo-non-form" />
             </div>
           </div>
           <div class="modal-footer">
@@ -97,7 +113,7 @@
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" ></script>
     <script src="https://codepen.io/anon/pen/aWapBE.js"></script>
-    <script src="js/mobiscroll.jquery.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/global.js"></script>
     <script src="js/report.js"></script>
   </body>

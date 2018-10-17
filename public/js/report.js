@@ -1,5 +1,5 @@
-var userId = '';
-var period;
+var userId = 'U28bae1ada29dcce79109253c7083afd3';
+var period = 'DAY';
 window.onload = function (e) {
   liff.init(function (data) {
     //getReportData(data.context.userId)
@@ -26,15 +26,18 @@ function getReportData(userId, period, target){
     let d = new Date();
     if (period == "DAY"){
       target = d.getDate();
+      $('#select-target').html(d.getFullYear() + '/' + (d.getMonth() + 1) + '/' +target);
     }
     else if(period == "WEEK"){
       target = 1;
     }
     else if(period == "MONTH"){
       target = d.getMonth() + 1;
+      $('#select-target').html(d.getFullYear() + '/' + (Number(d.getMonth()) + 1));
     }
     else if(period == "YEAR"){
       target = d.getFullYear();
+      $('#select-target').html(d.getFullYear());
     }
     
   }
@@ -49,7 +52,7 @@ function getReportData(userId, period, target){
         expenses.push(data.sum[i].value)
         total += data.sum[i].value;
       }
-      $('#total-expense').html("Total : " + total)
+      
       var ctx = document.getElementById("pieChart").getContext('2d');
       var config = {
         type: 'pie',
@@ -74,6 +77,8 @@ function getReportData(userId, period, target){
       window.alert("No data available")
     }
     if (data && data.raw.length > 0){
+      let summary = {};
+      let total = 0;
       $("#reportTbl-body").empty();
       for (let i in data.raw){
         let no = Number(i) +1;
@@ -84,11 +89,52 @@ function getReportData(userId, period, target){
         '<td><button type="button" class="btn btn-primary" onclick=editActOnclick("' + data.raw[i].id +'","' + 
         data.raw[i].category+ '","' + data.raw[i].expense + '","' + formatDate(data.raw[i].timestamp) +
         '")>Edit</button></td>/tr>';
-        $("#reportTbl-body").append(row)
+        $("#reportTbl-body").append(row);
+        total += parseFloat(data.raw[i].expense);
+        if (summary[data.raw[i].category]){
+          summary[data.raw[i].category] += parseFloat(data.raw[i].expense);
+        }
+        else{
+          summary[data.raw[i].category] = parseFloat(data.raw[i].expense);
+        }
+        
       }
+      let sumStr = 'Total : '+ total;
+      let detail = '';
+      for (let cat in summary){
+        detail +=  cat + " : " + summary[cat] + "<br> "
+      }
+      $('#total-expense').html(sumStr)
+      $('#collapase').html(detail)
     }
   });
 }
+$('#select-target').html(formatDate(null))
+$('#select-left').click(function(){
+  let current = $('#select-target').html();
+  let dateArr = current.split('/');
+  let newValue = parseInt(dateArr[dateArr.length -1]) - 1;
+  if(newValue != 0){
+    dateArr[dateArr.length -1] = newValue;
+    let newDate = dateArr.join('/');
+    $('#select-target').html(newDate);
+    getReportData(userId, period,newValue);
+  }
+  
+});
+$('#select-right').click(function(){
+  let current = $('#select-target').html();
+  let dateArr = current.split('/');
+  let newValue = parseInt(dateArr[dateArr.length -1]) + 1;
+  if((period == 'DAY') && (newValue < 32) ||
+      (period == 'MONTH') && (newValue < 13)
+  ){
+    dateArr[dateArr.length -1] = newValue;
+    let newDate = dateArr.join('/');
+    $('#select-target').html(newDate);
+    getReportData(userId, period,newValue);
+  }
+});
 function editActOnclick(expenseId, category, expense, timestamp){
   $('#modal-popup').modal('show');
   $('#expense-id').val(expenseId);
@@ -99,14 +145,11 @@ function editActOnclick(expenseId, category, expense, timestamp){
     let menu = '<button class="dropdown-item" type="button">'+ categories[key].name+ '</button>';
     $('#dropdownMenu').append(menu);
   }
-  $('#demo-external').mobiscroll().date({
-    showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnTap
-    showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnFocus
-    dateFormat: 'yy/mm/dd',
-    onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-4-0/datetime#event-onInit
-        inst.setVal(new Date(timestamp), true);
-    }
+  $('#modal-calendar').datepicker({
+    format: 'yyyy/mm/dd',
   });
+  $('#modal-calendar').datepicker('setValue', formatDate(timestamp))
+
   $("#dropdownMenu button").click(function () {
     $('#catDropDown').html( this.innerHTML)
     
@@ -142,14 +185,3 @@ $('#model-delete').click(function(){
 });
     
 });
-function formatDate(date) {
-  var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
-}

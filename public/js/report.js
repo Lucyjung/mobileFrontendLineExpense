@@ -1,4 +1,4 @@
-var userId = 'U28bae1ada29dcce79109253c7083afd3';
+var userId = '';
 var period = 'DAY';
 window.onload = function (e) {
   liff.init(function (data) {

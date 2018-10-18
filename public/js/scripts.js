@@ -1,4 +1,5 @@
 
+
 window.onload = function (e) {
   liff.init(function (data) {
     
@@ -15,54 +16,13 @@ window.onload = function (e) {
   });
 
 };
-$('#btn-submit').click(function() {
-  let cat = $('#btn-categories .active').data("symbol");
-  let cost = $('#viewer').html();
-  let dateStr = $('#demo-external').val();
-  let search = '/';
-  let dateArr = dateStr.split(search);
-  dateStr = dateArr.join('');
-  let msg = cat + cost + 'D' + dateStr;
-  if (cat && cat != '' && cost != 0){
-    liff.sendMessages([{
-      type: 'text',
-      text: msg
-    }]).then(function () {
-      $('#modal-msg').html('Message "' + msg + '" Sent');
-      $('#modal-popup').modal('show');
-      oldNum = '';
-      theNum = '';
-      viewer.innerHTML = '0';
-      equals.setAttribute('data-result', resultNum);
-    }).catch(function (error) {
-      window.alert("Error sending message: " + error);
-    });
-  }
 
-});
-$('#btn-close').click(function() {
-  liff.closeWindow();
-
-});
 
 
 (function() {
   'use strict';
 
-  // Mobiscroll Date & Time initialization
-  // $('#demo-external').mobiscroll().date({
-  //   showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnTap
-  //   showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-4-0/datetime#opt-showOnFocus
-  //   dateFormat: 'yy/mm/dd',
-  //   onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-4-0/datetime#event-onInit
-  //       inst.setVal(new Date(), true);
-  //   }
-  // });
 
-  // $('#demo-external').click(function () {
-  //   $('#demo-external').mobiscroll('show');
-  //   return false;
-  // });
   $('#demo-external').datepicker({
     format: 'yyyy/mm/dd',
   });
@@ -78,14 +38,14 @@ $('#btn-close').click(function() {
 
   // Variables
   var viewer = el('#viewer'), // Calculator screen where result is displayed
-    equals = el('#equals'), // Equal button
-    nums = el('.num'), // List of numbers
-    ops = el('.ops'), // List of operators
-    theNum = '', // Current number
-    oldNum = '', // First number
-    resultNum, // Result
-    operator, // Operator
-    oldOperator; // Previous Operator 
+  equals = el('#equals'), // Equal button
+  nums = el('.num'), // List of numbers
+  ops = el('.ops'), // List of operators
+  theNum = '', // Current number
+  oldNum = '', // First number
+  resultNum, // Result
+  operator, // Operator
+  oldOperator; // Previous Operator 
 
   // When: Number is clicked. Get the current number selected
   var setNum = function() {
@@ -188,5 +148,33 @@ $('#btn-close').click(function() {
   // Add click event to clear button
   el('#clear').onclick = clearAll;
 
-
+  $('#btn-submit').click(function() {
+    let cat = $('#btn-categories .active').data("symbol");
+    let cost = $('#viewer').html();
+    let dateStr = $('#demo-external').val();
+    let search = '/';
+    let dateArr = dateStr.split(search);
+    dateStr = dateArr.join('');
+    let msg = cat + cost + 'D' + dateStr;
+    if (cat && cat != '' && cost != 0){
+      liff.sendMessages([{
+        type: 'text',
+        text: msg
+      }]).then(function () {
+        $('#modal-msg').html('Message "' + msg + '" Sent');
+        $('#modal-popup').modal('show');
+        oldNum = '';
+        theNum = '';
+        viewer.innerHTML = '0';
+        equals.setAttribute('data-result', resultNum);
+      }).catch(function (error) {
+        window.alert("Error sending message: " + error);
+      });
+    }
+  
+  });
+  $('#btn-close').click(function() {
+    liff.closeWindow();
+  
+  });
 }());

@@ -159,7 +159,7 @@ $('#model-edit').click(function(){
   let expenseId = $('#expense-id').val();
   let cost = $('#modal-expense').val();
   let cat = $('#catDropDown').html();
-  let timestamp = $('#demo-external').val();
+  let timestamp = $('#modal-calendar').val();
   $.post("https://lucylinebot.herokuapp.com/expense/" + expenseId,
     {
         userId: userId,

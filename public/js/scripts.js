@@ -1,8 +1,19 @@
 
 
 window.onload = function (e) {
-  liff.init(function (data) {
-    
+  liff
+  .init({
+    liffId: "1560734038-MKxger7z" // use own liffId
+  })
+  .then(() => {
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }    
+  })
+  .catch((err) => {
+    // Error happens during initialization
+    window.alert("Line Login Error: " + err)
   });
  
   for (let key in categories){

@@ -1,13 +1,28 @@
 var userId = '';
 var period = 'DAY';
 window.onload = function (e) {
-  liff.init(function (data) {
-    //getReportData(data.context.userId)
-    userId = data.context.userId
-    getReportData(userId)
+  liff
+  .init({
+    liffId: "1560734038-YOd34GKJ" // use own liffId
+  })
+  .then(() => {
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
+    else{
+      liff.getProfile().then(profile => {
+        userId = profile.userId;
+        getReportData(userId);
+      })
+    }
+    
+  })
+  .catch((err) => {
+    // Error happens during initialization
+    window.alert("Line Login Error: " + err)
   });
 }
-getReportData(userId);
 $('#btn-grp-period button').click(function() {
   $(this).addClass('active').siblings().removeClass('active');
   period = $(this).val();

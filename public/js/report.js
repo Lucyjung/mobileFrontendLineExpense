@@ -74,8 +74,7 @@ function getReportData(userId, period, target){
         data: {
           datasets: [{
             data: expenses,
-            
-            label: 'Dataset 1',
+            label: 'Expense',
             backgroundColor: palette('tol', expenses.length).map(function(hex) {
               return '#' + hex;
             })
@@ -87,6 +86,39 @@ function getReportData(userId, period, target){
         }
       };
       window.myPie = new Chart(ctx, config);
+      if (data.raw.length > 0){
+        let barData = []
+        let barLabel = []
+        let rawGroupedData = _.groupBy(data.raw, function (ele) {
+          let eDate = new Date(ele.timestamp)
+          if (period == "YEAR") {
+            return eDate.getFullYear() + "." + Number(eDate.getMonth()+1)
+          } else {
+            return eDate.getFullYear() + "." + Number(eDate.getMonth()+1) + "." + eDate.getDate()
+          }
+          
+        });
+        barLabel = Object.keys(rawGroupedData)
+        for (let i in rawGroupedData){
+          barData.push(_.sumBy(rawGroupedData[i], function(o) { return o.expense; }))
+        }
+        var barctx = document.getElementById("barChart").getContext('2d');
+        var barconfig = {
+          type: 'bar',
+          data: {
+            datasets: [{
+              label: 'Expense',
+              data: barData,
+              backgroundColor: '#000084'
+            }],
+            labels: barLabel
+          },
+          options: {
+            responsive: true
+          }
+        };
+        window.myBar = new Chart(barctx, barconfig);
+      }
     }
     else{
       window.alert("No data available")

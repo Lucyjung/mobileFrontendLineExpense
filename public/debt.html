@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Monthly Debt</title>
+
+    <meta name="description" content="Line Expense">
+    <meta name="author" content="Narut">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    
+
+  </head>
+  <body>
+  
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group" role="group" id="btn-grp-tag" style="flex-flow: row wrap;"></div>
+        </div>
+    </div>
+    <div class="row" style="vertical-align: middle;margin-top: 10px;">
+      <div class="col-3">
+        <i class="fas fa-caret-square-left" id="select-left"></i>
+      </div>
+      <div class="col-6">
+        <h4 id="select-target">4</h4>
+      </div>
+      <div class="col-3">
+        <i class="fas fa-caret-square-right" id="select-right"></i>
+      </div>
+    </div>
+
+    <div class="row">
+        <h4 id="total-expense"></h4>
+    </div>
+    <div class="row">
+        <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapase">More Detail</button>
+        <div id="collapase" class="collapse">
+          
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover">
+            <thead>
+              <th scope="col">#</th>
+              <th scope="col">Categories</th>
+              <th scope="col">Expense</th>
+              <th scope="col">Tag</th>
+              <th scope="col">Date</th>
+            </thead>
+            <tbody id="debtTbl-body">
+
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" ></script>
+    <script src="js/aWapBE.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/debt.js"></script>
+  </body>
+</html>

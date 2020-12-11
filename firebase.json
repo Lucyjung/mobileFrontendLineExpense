@@ -12,6 +12,10 @@
         "destination": "/report.html"
       },
       {
+        "source": "/debt",
+        "destination": "/debt.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

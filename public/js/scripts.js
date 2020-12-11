@@ -1,5 +1,5 @@
 
-
+var userId = '';
 window.onload = function (e) {
   liff
   .init({
@@ -9,6 +9,16 @@ window.onload = function (e) {
     if (!liff.isLoggedIn()) {
       liff.login();
       return;
+    }
+    else{
+      liff.getProfile().then(profile => {
+      userId = profile.userId;
+      $.ajax({
+        url: "https://lucylinebot.herokuapp.com/debt/" + userId,
+        type: 'GET',
+        success: populateMethod
+      });
+    })
     }    
   })
   .catch((err) => {
@@ -21,13 +31,37 @@ window.onload = function (e) {
       '<span class="icon-center">' + categories[key].name  + '</span></button>';
     $('#btn-categories').append(html);
   }
+  for (let key in tags){
+    let html = '<button class="btn btn-secondary btn-fix-size" type="button" data-symbol="' + key +'">' + tags[key].icon +
+      '<span class="icon-center">' + tags[key].name  + '</span></button>';
+    $('#btn-tag').append(html);
+  }
   $('#btn-categories button').click(function() {
     $(this).addClass('active').siblings().removeClass('active');
 
   });
-
+  
+  
 };
-
+function populateMethod(res){
+  $('#btn-tag').empty()
+  for (let key in tags){
+    let html = '<button class="btn btn-secondary btn-fix-size" type="button" data-symbol="' + key +'">' + tags[key].icon +
+      '<span class="icon-center">' + tags[key].name  + '</span></button>';
+    $('#btn-tag').append(html);
+  }
+  if (res.success){
+    const result = res.result
+    for (let key in result){
+      let html = '<button class="btn btn-secondary btn-fix-size" type="button" data-symbol="' + result[key].tag +'">' + '<i class="fas fa-credit-card"></i>' +
+        '<span class="icon-center">' + result[key].tag  + '</span></button>';
+      $('#btn-tag').append(html);
+    }
+    $('#btn-tag button').click(function() {
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+  }
+}
 
 
 (function() {
@@ -161,12 +195,17 @@ window.onload = function (e) {
 
   $('#btn-submit').click(function() {
     let cat = $('#btn-categories .active').data("symbol");
+    let tag = $('#btn-tag .active').data("symbol");
     let cost = $('#viewer').html();
     let dateStr = $('#demo-external').val();
     let search = '/';
     let dateArr = dateStr.split(search);
     dateStr = dateArr.join('');
     let msg = cat + cost + 'D' + dateStr;
+
+    if (tag && tag != 'cash'){
+      msg += '#' + tag
+    }
     if (cat && cat != '' && cost != 0){
       liff.sendMessages([{
         type: 'text',
@@ -188,4 +227,5 @@ window.onload = function (e) {
     liff.closeWindow();
   
   });
+  
 }());

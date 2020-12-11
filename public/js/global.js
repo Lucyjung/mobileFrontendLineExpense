@@ -14,6 +14,12 @@ const categories = {
     // D : Reserverd for modify date
   };
 
+const tags = {
+  cash : { name: 'CASH', icon: '<i class="fas fa-money-bill"></i>'},
+  // 9596 : { name: 'KBANK', icon: '<i class="fas fa-credit-card"></i>'},
+  // 2468 : { name: '2468', icon: '<i class="fas fa-credit-card"></i>'},
+  // 6861 : { name: '6861', icon: '<i class="fas fa-credit-card"></i>'}
+}
 function formatDate(date) {
   if (date){
     var d = new Date(date);
@@ -30,4 +36,7 @@ function formatDate(date) {
   if (day.length < 2) day = '0' + day;
 
   return [year, month ,day].join('/');
+}
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

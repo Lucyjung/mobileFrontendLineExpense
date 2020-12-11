@@ -129,12 +129,14 @@ function getReportData(userId, period, target){
       $("#reportTbl-body").empty();
       for (let i in data.raw){
         let no = Number(i) +1;
+        let tag = data.raw[i].tag || ''
         let row = "<tr><td>" + no + "</td>" + 
         "<td>"+data.raw[i].category + "</td>" + 
-        "<td>" + data.raw[i].expense +"</td>" + 
+        "<td>" + numberWithCommas(data.raw[i].expense) +"</td>" + 
+        "<td>" +  tag +"</td>" + 
         "<td>" + formatDate(data.raw[i].timestamp) +"</td>" +
         '<td><button type="button" class="btn btn-primary" onclick=editActOnclick("' + data.raw[i].id +'","' + 
-        data.raw[i].category+ '","' + data.raw[i].expense + '","' + formatDate(data.raw[i].timestamp) +
+        data.raw[i].category+ '","' + data.raw[i].expense + '","' + formatDate(data.raw[i].timestamp) + '","' + tag +
         '")>Edit</button></td>/tr>';
         $("#reportTbl-body").append(row);
         total += parseFloat(data.raw[i].expense);
@@ -146,10 +148,10 @@ function getReportData(userId, period, target){
         }
         
       }
-      let sumStr = 'Total : '+ total;
+      let sumStr = 'Total : '+ numberWithCommas(total);
       let detail = '';
       for (let cat in summary){
-        detail +=  cat + " : " + summary[cat] + "<br> "
+        detail +=  cat + " : " + numberWithCommas(summary[cat]) + "<br> "
       }
       $('#total-expense').html(sumStr)
       $('#collapase').html(detail)
@@ -182,11 +184,12 @@ $('#select-right').click(function(){
     getReportData(userId, period,newValue);
   }
 });
-function editActOnclick(expenseId, category, expense, timestamp){
+function editActOnclick(expenseId, category, expense, timestamp, tag){
   $('#modal-popup').modal('show');
   $('#expense-id').val(expenseId);
   $('#catDropDown').html(category);
   $('#modal-expense').val(expense);
+  $('#modal-tag').val(tag);
   $('#dropdownMenu').empty();
   for (let key in categories){
     let menu = '<button class="dropdown-item" type="button">'+ categories[key].name+ '</button>';
@@ -194,6 +197,7 @@ function editActOnclick(expenseId, category, expense, timestamp){
   }
   $('#modal-calendar').datepicker({
     format: 'yyyy/mm/dd',
+    container: '#modalContainer',
   });
   $('#modal-calendar').datepicker('setValue', formatDate(timestamp))
 
@@ -207,12 +211,14 @@ $('#model-edit').click(function(){
   let cost = $('#modal-expense').val();
   let cat = $('#catDropDown').html();
   let timestamp = $('#modal-calendar').val();
+  let tag = $('#modal-tag').val();
   $.post("https://lucylinebot.herokuapp.com/expense/" + expenseId,
     {
         userId: userId,
         cat: cat,
         cost: cost,
-        timestamp: timestamp
+        timestamp: timestamp,
+        tag: tag
     },
     function(){
       $('#modal-popup').modal('hide');

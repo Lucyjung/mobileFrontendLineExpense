@@ -44,7 +44,7 @@
     </div>
     <div class="row">
       <canvas id="barChart"></canvas>
-  </div>
+    </div>
     <div class="row">
         <h4 id="total-expense"></h4>
     </div>
@@ -61,6 +61,7 @@
               <th scope="col">#</th>
               <th scope="col">Categories</th>
               <th scope="col">Expense</th>
+              <th scope="col">Tag</th>
               <th scope="col">Date</th>
               <th scope="col">Action</th>
             </thead>
@@ -71,7 +72,7 @@
         </div>
     </div>
     <div class="modal" tabindex="-1" role="dialog" id="modal-popup">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog" role="document" id="modalContainer">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Edit Expense</h5>
@@ -97,7 +98,17 @@
               </div>
               <input type="number" class="form-control" placeholder="Expense" aria-label="Expense" aria-describedby="basic-addon1" id="modal-expense">
             </div>
-            <div class="external-container">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div class="dropdown">
+                    <button class="btn btn-secondary" type="button" >
+                      Tag
+                    </button>
+                  </div>
+                </div>
+              <input type="text" class="form-control" id="modal-tag" aria-describedby="basic-addon3">
+            </div>
+            <div>
                 <input id="modal-calendar" class="demo-non-form" />
             </div>
           </div>

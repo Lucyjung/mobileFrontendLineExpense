@@ -67,7 +67,8 @@ function getReportData(userId, period, target){
         expenses.push(data.sum[i].value)
         total += data.sum[i].value;
       }
-      
+      $('#pieChart').remove();
+      $('#pieContainer').append('<canvas id="pieChart"></canvas>');
       var ctx = document.getElementById("pieChart").getContext('2d');
       var config = {
         type: 'pie',
@@ -102,6 +103,8 @@ function getReportData(userId, period, target){
         for (let i in rawGroupedData){
           barData.push(_.sumBy(rawGroupedData[i], function(o) { return o.expense; }))
         }
+        $('#barChart').remove();
+        $('#barContainer').append('<canvas id="barChart"></canvas>');
         var barctx = document.getElementById("barChart").getContext('2d');
         var barconfig = {
           type: 'bar',
@@ -151,7 +154,7 @@ function getReportData(userId, period, target){
       let sumStr = 'Total : '+ numberWithCommas(total);
       let detail = '';
       for (let cat in summary){
-        detail +=  cat + " : " + numberWithCommas(summary[cat]) + "<br> "
+        detail +=  cat + " : " + numberWithCommas(Number(summary[cat])) + "<br> "
       }
       $('#total-expense').html(sumStr)
       $('#collapase').html(detail)

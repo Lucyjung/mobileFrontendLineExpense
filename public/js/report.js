@@ -76,7 +76,7 @@ function getReportData(userId, period, target){
           datasets: [{
             data: expenses,
             label: 'Expense',
-            backgroundColor: palette('tol', expenses.length).map(function(hex) {
+            backgroundColor: palette('tol-dv', expenses.length).map(function(hex) {
               return '#' + hex;
             })
           }],

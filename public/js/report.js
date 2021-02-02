@@ -1,5 +1,6 @@
 var userId = '';
 var period = 'DAY';
+let curDate = new Date();
 window.onload = function (e) {
   liff
   .init({
@@ -26,8 +27,28 @@ window.onload = function (e) {
 $('#btn-grp-period button').click(function() {
   $(this).addClass('active').siblings().removeClass('active');
   period = $(this).val();
-
-  getReportData(userId, period)
+  let target
+  let newDate
+  if (period == "DAY"){
+    curDate.setDate(curDate.getDate())
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1) + '/' + curDate.getDate();
+    target = curDate.getFullYear() + String(Number(curDate.getMonth() + 1)).padStart(2,'0') + String(curDate.getDate()).padStart(2,'0');
+  }
+  else if(period == "WEEK"){
+    target = 1;
+  }
+  else if(period == "MONTH"){
+    curDate.setMonth(curDate.getMonth())
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1)
+    target = curDate.getFullYear() + String(Number(curDate.getMonth() + 1)).padStart(2,'0');
+  }
+  else if(period == "YEAR"){
+    curDate.setFullYear(curDate.getFullYear())
+    newDate = curDate.getFullYear()
+    target = curDate.getFullYear()
+  }
+  $('#select-target').html(newDate);
+  getReportData(userId, period, target)
 });
 function getReportData(userId, period, target){
 
@@ -163,29 +184,72 @@ function getReportData(userId, period, target){
 }
 $('#select-target').html(formatDate(null))
 $('#select-left').click(function(){
-  let current = $('#select-target').html();
-  let dateArr = current.split('/');
-  let newValue = parseInt(dateArr[dateArr.length -1]) - 1;
-  if(newValue != 0){
-    dateArr[dateArr.length -1] = newValue;
-    let newDate = dateArr.join('/');
-    $('#select-target').html(newDate);
-    getReportData(userId, period,newValue);
+  // let current = $('#select-target').html();
+  // let dateArr = current.split('/');
+  // let newValue = parseInt(dateArr[dateArr.length -1]) - 1;
+  // if(newValue != 0){
+  //   dateArr[dateArr.length -1] = newValue;
+  //   let newDate = dateArr.join('/');
+  //   $('#select-target').html(newDate);
+  //   getReportData(userId, period,newValue);
+  // }
+  let target
+  let newDate = ""
+  if (period == "DAY"){
+    curDate.setDate(curDate.getDate() - 1)
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1) + '/' + curDate.getDate();
+    target = curDate.getFullYear() + String(Number(curDate.getMonth() + 1)).padStart(2,'0') + String(curDate.getDate()).padStart(2,'0');
   }
-  
+  else if(period == "WEEK"){
+    target = 1;
+  }
+  else if(period == "MONTH"){
+    curDate.setMonth(curDate.getMonth() - 1)
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1)
+    target = curDate.getFullYear() + String(Number(curDate.getMonth() + 1)).padStart(2,'0');
+  }
+  else if(period == "YEAR"){
+    curDate.setFullYear(curDate.getFullYear() - 1)
+    newDate = curDate.getFullYear()
+    target = curDate.getFullYear()
+  }
+  $('#select-target').html(newDate);
+  getReportData(userId, period,target);
 });
 $('#select-right').click(function(){
-  let current = $('#select-target').html();
-  let dateArr = current.split('/');
-  let newValue = parseInt(dateArr[dateArr.length -1]) + 1;
-  if((period == 'DAY') && (newValue < 32) ||
-      (period == 'MONTH') && (newValue < 13)
-  ){
-    dateArr[dateArr.length -1] = newValue;
-    let newDate = dateArr.join('/');
-    $('#select-target').html(newDate);
-    getReportData(userId, period,newValue);
+  // let current = $('#select-target').html();
+  // let dateArr = current.split('/');
+  // let newValue = parseInt(dateArr[dateArr.length -1]) + 1;
+  // if((period == 'DAY') && (newValue < 32) ||
+  //     (period == 'MONTH') && (newValue < 13)
+  // ){
+  //   dateArr[dateArr.length -1] = newValue;
+  //   let newDate = dateArr.join('/');
+  //   $('#select-target').html(newDate);
+  //   getReportData(userId, period,newValue);
+  // }
+  let target
+  let newDate = ""
+  if (period == "DAY"){
+    curDate.setDate(curDate.getDate() + 1)
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1) + '/' + curDate.getDate();
+    target = curDate.getFullYear() + Number(curDate.getMonth() + 1) + curDate.getDate();
   }
+  else if(period == "WEEK"){
+    target = 1;
+  }
+  else if(period == "MONTH"){
+    curDate.setMonth(curDate.getMonth() + 1)
+    newDate = curDate.getFullYear() + '/' + Number(curDate.getMonth() + 1)
+    target = curDate.getFullYear() + Number(curDate.getMonth() + 1)
+  }
+  else if(period == "YEAR"){
+    curDate.setFullYear(curDate.getFullYear() + 1)
+    newDate = curDate.getFullYear()
+    target = curDate.getFullYear()
+  }
+  $('#select-target').html(newDate);
+  getReportData(userId, period,target);
 });
 function editActOnclick(expenseId, category, expense, timestamp, tag){
   $('#modal-popup').modal('show');

@@ -82,7 +82,22 @@ $('#select-right').click(function(){
     $('#select-target').html(d.getFullYear() + '/' + (Number(d.getMonth()) + 1));
     getDebtData();
 });
-    
+$('#qrButton').click(function(){
+  if (!liff.isInClient()) {
+    document.getElementById('qrResult').textContent = "scanCode only work in Line!";
+  } else {
+      if (liff.scanCode) {
+          liff.scanCode().then(result => {
+              alert(result)
+              // e.g. result = { value: "Hello LIFF app!" }
+              const stringifiedResult = JSON.stringify(result);
+              document.getElementById('qrResult').textContent = stringifiedResult;
+          }).catch(err => {
+              document.getElementById('qrResult').textContent = "scanCode failed!!! " + err;
+          });
+      }
+  }
+});    
 function populateMethod(res){
     if (res.success){
       const result = res.result

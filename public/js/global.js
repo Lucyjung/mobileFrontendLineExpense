@@ -13,7 +13,8 @@ const categories = {
     MA : {name: 'Mainte.', icon: '<i class="fas fa-wrench"></i>'},
     ME : {name:'Merit', icon:'<i class="fas fa-pray"></i>'},
     IN : {name:'Insurance', icon:'<i class="fa fa-medkit"></i>'},
-    O : {name: 'Other', icon:'<i class="fab fa-rocketchat"></i>'}   
+    O : {name: 'Other', icon:'<i class="fab fa-rocketchat"></i>'},
+    R : {name: 'Revenue', icon:'<i class="fas fa-money-bill"></i>'}      
     // D : Reserverd for modify date
   };
 

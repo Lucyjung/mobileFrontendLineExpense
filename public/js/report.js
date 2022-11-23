@@ -52,7 +52,7 @@ $('#btn-grp-period button').click(function() {
 });
 function getReportData(userId, period, target){
 
-  let url = "https://lucylinebot.herokuapp.com/report/" + userId + "?";
+  let url = "https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/report/" + userId + "?";
 
   if (!period){
     period = "DAY";
@@ -279,7 +279,7 @@ $('#model-edit').click(function(){
   let cat = $('#catDropDown').html();
   let timestamp = $('#modal-calendar').val();
   let tag = $('#modal-tag').val();
-  $.post("https://lucylinebot.herokuapp.com/expense/" + expenseId,
+  $.post("https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/expense/" + expenseId,
     {
         userId: userId,
         cat: cat,
@@ -296,7 +296,7 @@ $('#model-edit').click(function(){
 $('#model-delete').click(function(){
   let expenseId = $('#expense-id').val();
   $.ajax({
-    url: "https://lucylinebot.herokuapp.com/expense/" + expenseId,
+    url: "https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/expense/" + expenseId,
     type: 'DELETE',
     success: function(result) {
       $('#modal-popup').modal('hide');

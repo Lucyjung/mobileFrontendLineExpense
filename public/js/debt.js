@@ -16,7 +16,7 @@ window.onload = function (e) {
       liff.getProfile().then(profile => {
         userId = profile.userId;
         $.ajax({
-            url: "https://lucylinebot.herokuapp.com/debt/" + userId,
+            url: "https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/debt/" + userId,
             type: 'GET',
             success: populateMethod
         });
@@ -31,7 +31,7 @@ window.onload = function (e) {
 
 function getDebtData(){
 
-    let url = "https://lucylinebot.herokuapp.com/debtExpense/" + userId + "?";
+    let url = "https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/debtExpense/" + userId + "?";
     
     target = d.getMonth() + 1 + '-' + d.getFullYear();
     $('#select-target').html(d.getFullYear() + '/' + (Number(d.getMonth()) + 1));

@@ -14,7 +14,7 @@ window.onload = function (e) {
       liff.getProfile().then(profile => {
       userId = profile.userId;
       $.ajax({
-        url: "https://lucylinebot.herokuapp.com/debt/" + userId,
+        url: "https://lineexpense-dot-fir-1-4004c.uc.r.appspot.com/debt/" + userId,
         type: 'GET',
         success: populateMethod
       });
